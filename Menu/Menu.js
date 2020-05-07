@@ -26,16 +26,16 @@ const menuMaker = (menuData) => {
   const menuContainer = document.createElement('div');  
   const menuList = document.createElement('ul')
 
- 
+  menuContainer.appendChild(menuList);
+
   // Step 2: Inside this function, iterate over the array creating a list item <li> element for each item in the array. 
   // Add those items to the <ul> 
  
   menuData.forEach(element => {
     
     const listItem = document.createElement('li');
-    menuList.appendChild(listItem);
     listItem.textContent = element;
-    
+    menuList.appendChild(listItem);
   });
 
   // Step 3: Using a DOM selector, select the menu button (the element with a class of 'menu-button') currently on the DOM.
@@ -43,9 +43,12 @@ const menuMaker = (menuData) => {
   const menuButton = document.querySelector('.menu-button');
 
   // Step 4: add a click event listener to the menu button. When clicked it should toggle the class 'menu--open' on the menu (your div with a 'menu' class).
-  
+
+  menuContainer.classList.add('menu');
+
   menuButton.addEventListener('click', event => {
-    menuButton.classList.toggle('menu--open')
+    menuContainer.classList.toggle('menu--open')
+    console.log('iclickedit')
   });
 
   // Step 5: return the menu component.
@@ -56,4 +59,6 @@ const menuMaker = (menuData) => {
 
   // Step 6: add the menu component to the DOM.
 
-  headers.appendChild(menuContainer)
+  const header = document.querySelector('.header')
+  
+  header.appendChild(menuMaker(menuItems))
