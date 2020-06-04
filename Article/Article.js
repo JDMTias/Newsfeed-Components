@@ -105,10 +105,100 @@ const data = [
 
   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
 
-  Step 3: return the entire component.
+  Step 3: return the entire component. */
 
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+//    function elementMaker(element){
+//   return document.createElement(element);
+// }
 
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+function articleChild(child) {
+  return article.appendChild(child);
+}
 
-*/
+// function addClass(location, name) {
+//   return location.classList.add(name)
+// }
+
+// function addContent(location, data){
+//   return location.textContent = data;
+// }
+
+// ask why these don't work outside is it scope?
+
+function select(selector) {
+  return document.querySelector(selector)
+}
+
+  const articleMaker = (articleData) => {
+    const {title, date, firstParagraph, secondParagraph, thirdParagraph}= articleData;
+
+    function elementMaker(element){
+      return document.createElement(element);
+    }
+    
+    function articleChild(child) {
+      return article.appendChild(child);
+    }
+    
+    function addClass(location, name) {
+      return location.classList.add(name)
+    }
+    
+    function addContent(location, data){
+      return location.textContent = data;
+    }
+  
+    const article = elementMaker('div');
+    const mainTitle = elementMaker('h2');
+    const mainDate = elementMaker('p');
+    const p1 = elementMaker('p');
+    const p2 = elementMaker('p');
+    const p3 = elementMaker('p');
+    const button = elementMaker('span');
+
+    articleChild(mainTitle);
+    articleChild(mainDate);
+    articleChild(p1);
+    articleChild(p2);
+    articleChild(p3);
+    articleChild(button);
+
+    addClass(article, "article");
+    addClass(mainDate, "date");
+    addClass(p1, "p1");
+    addClass(p2, "p2");
+    addClass(p3, "p3");
+    addClass(button, "expandButton");
+
+    addContent(mainTitle, title);
+    addContent(mainDate, date);
+    addContent(p1, firstParagraph);
+    addContent(p2, secondParagraph);
+    addContent(p3, thirdParagraph);
+    addContent(button, '\u25bc');  
+    
+  
+
+    const open = (event) => {
+        article.classList.toggle('article-open');
+    }
+
+    button.addEventListener('click', open)
+    
+    return article;
+  }
+
+  
+  // Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+
+ const articleBody = select(".articles");
+
+ data.forEach((dataObj) => {
+   const newArticle = articleMaker(dataObj);
+   articleBody.appendChild(newArticle);
+  //  ask why I cant do articleBody.articleChild(child) this may be because the return is article. and that isn't calling it correctly.
+   console.log(newArticle);
+ })
+
+
+  // Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
