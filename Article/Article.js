@@ -107,57 +107,75 @@ const data = [
 
   Step 3: return the entire component. */
 
-   function elementMaker(element){
-  return document.createElement(element)
-}
+//    function elementMaker(element){
+//   return document.createElement(element);
+// }
 
 function articleChild(child) {
-  return article.appendChild(child)
+  return article.appendChild(child);
 }
 
-function addClass(location, name) {
-  location.classList.add(name)
-}
+// function addClass(location, name) {
+//   return location.classList.add(name)
+// }
 
-function addContent(location, data){
-  location.textContent = data;
-}
+// function addContent(location, data){
+//   return location.textContent = data;
+// }
+
+// ask why these don't work outside is it scope?
 
 function select(selector) {
-  document.querySelector(selector)
+  return document.querySelector(selector)
 }
 
   const articleMaker = (articleData) => {
     const {title, date, firstParagraph, secondParagraph, thirdParagraph}= articleData;
+
+    function elementMaker(element){
+      return document.createElement(element);
+    }
+    
+    function articleChild(child) {
+      return article.appendChild(child);
+    }
+    
+    function addClass(location, name) {
+      return location.classList.add(name)
+    }
+    
+    function addContent(location, data){
+      return location.textContent = data;
+    }
   
     const article = elementMaker('div');
-    const title = elementMaker('h2');
-    const date = elementMaker('p');
+    const mainTitle = elementMaker('h2');
+    const mainDate = elementMaker('p');
     const p1 = elementMaker('p');
     const p2 = elementMaker('p');
     const p3 = elementMaker('p');
     const button = elementMaker('span');
 
-    articleChild(title);
-    articleChild(date);
+    articleChild(mainTitle);
+    articleChild(mainDate);
     articleChild(p1);
     articleChild(p2);
     articleChild(p3);
     articleChild(button);
 
     addClass(article, "article");
-    addClass(date, "date");
+    addClass(mainDate, "date");
     addClass(p1, "p1");
     addClass(p2, "p2");
     addClass(p3, "p3");
-    addClass(button, "button");
+    addClass(button, "expandButton");
 
-    addContent(title, title);
-    addContent(date, date);
+    addContent(mainTitle, title);
+    addContent(mainDate, date);
     addContent(p1, firstParagraph);
     addContent(p2, secondParagraph);
     addContent(p3, thirdParagraph);
-    addContent(button, '\21AF');
+    addContent(button, '\u25bc');  
     
   
 
@@ -170,14 +188,15 @@ function select(selector) {
     return article;
   }
 
-
+  
   // Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
 
- const articleBody = select('.articles')
+ const articleBody = select(".articles");
 
  data.forEach((dataObj) => {
    const newArticle = articleMaker(dataObj);
-   articleBody.articleChild(newArticle);
+   articleBody.appendChild(newArticle);
+  //  ask why I cant do articleBody.articleChild(child) this may be because the return is article. and that isn't calling it correctly.
    console.log(newArticle);
  })
 
